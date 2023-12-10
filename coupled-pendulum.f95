@@ -29,10 +29,12 @@ PROGRAM pendulum
 
     allocate(x_data(1:niter,n))
 
-    open(unit=50, file="three-pendulum_normal2.dat", action="write")
-    open(unit=51, file="three-pendulum_normal2.xyz", action="write")
+    open(unit=50, file="pendulum.dat", action="write")
 
     do i=1,niter
+        do j = 1,n 
+            x_data(i,j) = x(j)
+        end do
         ! Step 1
         xt(1,1) = dt*f(v(1))
         vt(1,1) = dt*g(x(1),x(1),x(2))
@@ -69,14 +71,16 @@ PROGRAM pendulum
             x(k) = x(k)+(xt(k,1)+2.0*xt(k,2)+2.0*xt(k,3)+xt(k,4))*(1.0/6.0)
             v(k) = v(k)+(vt(k,1)+2.0*vt(k,2)+2.0*vt(k,3)+vt(k,4))*(1.0/6.0)
         end do
-
+        t=t+dt
     end do
+
+    write(50,*)x_data
 end program pendulum
 
 !We define our function here : dx/dt for f
-    real*8 function func_f(v)
+    real*8 function f(v)
         real*8 :: v
-        func_f=v
+        f=v
     end function
 
 ! We define our function here : dv/dt for g
