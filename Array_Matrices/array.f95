@@ -15,7 +15,7 @@ program array
 
     ! another way
     a = (/10,11,63,63,63,21/)
-    print*,a+5
+    !print*,a+5 ! print at once in a row
 
     do i=1,6
         print*,a(i)
